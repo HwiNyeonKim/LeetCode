@@ -1,22 +1,25 @@
 package easy;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TwoSum {
     public int[] twoSum(int[] nums, int target) {
-        // Trial #1 : O((n^2) solution
-        int answer1 = 0;
-        int answer2 = 0;
-        for (int i = 0; i < nums.length - 1; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                int first = nums[i];
-                int second = nums[j];
-                if (first + second == target) {
-                    answer1 = i;
-                    answer2 = j;
-                    break;
-                }
+        // Trial #2 better solution
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i); // value, index
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            int leftover = target - nums[i];
+            if (map.containsKey(leftover) && map.get(leftover) != i) {
+                return new int[] {i, map.get(leftover)};
             }
         }
-        return new int[] {answer1, answer2};
+
+        // should never reach here.
+        return new int[] {-1, -1};
     }
 }
 
